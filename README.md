@@ -18,7 +18,7 @@ This library solves a critical problem: **using Azure AD authentication with SQL
 - ✅ **Named Parameters** - Supports both `:paramName` (R2DBC) and `@paramName` (SQL Server) syntax
 - ✅ **Duplicate Parameter Handling** - Correctly binds parameters that appear multiple times in SQL
 - ✅ **Transaction Management** - Full reactive transaction support
-- ✅ **Existing Code Compatible** - Works with `ReactiveCrudRepository` and `R2dbcEntityTemplate`
+- ✅ **Existing Code Compatible** - Works with `ReactiveCrudRepository`, `R2dbcEntityTemplate` and `DatabaseClient`
 - ✅ **Type-Safe Configuration** - Configuration properties with IDE autocomplete
 
 ## 📋 Table of Contents
@@ -54,7 +54,7 @@ Add the dependency to your `pom.xml`:
 <dependencies>
     <!-- R2DBC JDBC Bridge -->
     <dependency>
-        <groupId>io.github.r2dbc</groupId>
+        <groupId>io.github.abhishekchanda</groupId>
         <artifactId>r2dbc-jdbc-bridge</artifactId>
         <version>1.0.0</version>
     </dependency>
@@ -63,14 +63,14 @@ Add the dependency to your `pom.xml`:
     <dependency>
         <groupId>com.microsoft.sqlserver</groupId>
         <artifactId>mssql-jdbc</artifactId>
-        <version>12.8.1.jre11</version>
+        <version>13.2.1.jre11</version>
     </dependency>
     
     <!-- Microsoft Authentication Library (for Azure AD) -->
     <dependency>
         <groupId>com.microsoft.azure</groupId>
         <artifactId>msal4j</artifactId>
-        <version>1.17.2</version>
+        <version>1.23.1</version>
     </dependency>
 </dependencies>
 ```
@@ -81,9 +81,9 @@ Add to your `build.gradle`:
 
 ```gradle
 dependencies {
-    implementation 'io.github.r2dbc:r2dbc-jdbc-bridge:1.0.0'
-    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11'
-    implementation 'com.microsoft.azure:msal4j:1.17.2'
+    implementation 'io.github.abhishekchanda:r2dbc-jdbc-bridge:1.0.0'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:13.2.1.jre11'
+    implementation 'com.microsoft.azure:msal4j:1.23.1'
 }
 ```
 
@@ -93,7 +93,7 @@ If the library isn't published to Maven Central yet:
 
 ```bash
 # Clone the repository
-git clone https://github.com/r2dbc/r2dbc-jdbc-bridge.git
+git clone https://github.com/abhishekchanda/r2dbc-jdbc-bridge.git
 cd r2dbc-jdbc-bridge
 
 # Install to local Maven repository
@@ -447,7 +447,7 @@ public interface ProductRepository extends ReactiveCrudRepository<Product, Long>
 
 ```bash
 # Clone the repository
-git clone https://github.com/r2dbc/r2dbc-jdbc-bridge.git
+git clone https://github.com/abhishekchanda/r2dbc-jdbc-bridge.git
 cd r2dbc-jdbc-bridge
 
 # Build and run tests
@@ -478,7 +478,7 @@ r2dbc-jdbc-bridge/
     │   ├── java/
     │   │   └── io/
     │   │       └── github/
-    │   │           └── r2dbc/
+    │   │           └── abhishekchanda/
     │   │               └── jdbc/
     │   │                   ├── JdbcR2dbcConnectionFactory.java
     │   │                   ├── JdbcR2dbcConnection.java
@@ -497,7 +497,7 @@ r2dbc-jdbc-bridge/
         └── java/
             └── io/
                 └── github/
-                    └── r2dbc/
+                    └── abhishekchanda/
                         └── jdbc/
                             └── ... (test classes)
 ```
@@ -686,8 +686,8 @@ logging.level.com.microsoft.sqlserver.jdbc=DEBUG
 
 ### Getting Help
 
-1. Check [GitHub Issues](https://github.com/r2dbc/r2dbc-jdbc-bridge/issues)
-2. Review [Troubleshooting Guide](https://github.com/r2dbc/r2dbc-jdbc-bridge/wiki/Troubleshooting)
+1. Check [GitHub Issues](https://github.com/abhishekchanda/r2dbc-jdbc-bridge/issues)
+2. Review [Troubleshooting Guide](https://github.com/abhishekchanda/r2dbc-jdbc-bridge/wiki/Troubleshooting)
 3. Post on [Stack Overflow](https://stackoverflow.com) with tags: `r2dbc`, `spring-data-r2dbc`, `azure-sql-database`
 4. Contact maintainers
 
@@ -803,9 +803,9 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## 📞 Contact
 
-- **Project Homepage**: https://github.com/r2dbc/r2dbc-jdbc-bridge
-- **Issue Tracker**: https://github.com/r2dbc/r2dbc-jdbc-bridge/issues
-- **Discussions**: https://github.com/r2dbc/r2dbc-jdbc-bridge/discussions
+- **Project Homepage**: https://github.com/abhishekchanda/r2dbc-jdbc-bridge
+- **Issue Tracker**: https://github.com/abhishekchanda/r2dbc-jdbc-bridge/issues
+- **Discussions**: https://github.com/abhishekchanda/r2dbc-jdbc-bridge/discussions
 
 ## 🗺️ Roadmap
 
