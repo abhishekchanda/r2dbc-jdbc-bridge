@@ -23,7 +23,8 @@ class JdbcR2dbcAutoConfigurationTest {
         contextRunner
                 .withPropertyValues(
                         "r2dbc.jdbc.server=localhost",
-                        "r2dbc.jdbc.database=testdb"
+                        "r2dbc.jdbc.database=testdb",
+                        "r2dbc.jdbc.pool.enabled=false"
                 )
                 .run(context -> {
                     assertThat(context).hasSingleBean(DataSource.class);
@@ -50,7 +51,8 @@ class JdbcR2dbcAutoConfigurationTest {
                         "r2dbc.jdbc.authentication=ActiveDirectoryServicePrincipal",
                         "r2dbc.jdbc.client-id=my-client-id",
                         "r2dbc.jdbc.client-secret=my-secret",
-                        "r2dbc.jdbc.tenant-id=my-tenant"
+                        "r2dbc.jdbc.tenant-id=my-tenant",
+                        "r2dbc.jdbc.pool.enabled=false"
                 )
                 .run(context -> {
                     DataSource ds = context.getBean(DataSource.class);
@@ -70,7 +72,8 @@ class JdbcR2dbcAutoConfigurationTest {
                         "r2dbc.jdbc.database=testdb",
                         "r2dbc.jdbc.authentication=SqlPassword",
                         "r2dbc.jdbc.username=sa",
-                        "r2dbc.jdbc.password=secret"
+                        "r2dbc.jdbc.password=secret",
+                        "r2dbc.jdbc.pool.enabled=false"
                 )
                 .run(context -> {
                     DataSource ds = context.getBean(DataSource.class);

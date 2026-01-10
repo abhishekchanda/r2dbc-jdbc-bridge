@@ -18,8 +18,61 @@ public class JdbcR2dbcProperties {
     private boolean trustServerCertificate = false;
     private int connectionTimeout = 30;
     private int loginTimeout = 30;
+    private final Pool pool = new Pool();
+
+    public static class Pool {
+        private boolean enabled = true;
+        private int maxSize = 10;
+        private int minIdle = 2;
+        private long maxLifetime = 1800000; // 30 minutes
+        private long idleTimeout = 600000;  // 10 minutes
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public int getMaxSize() {
+            return maxSize;
+        }
+
+        public void setMaxSize(int maxSize) {
+            this.maxSize = maxSize;
+        }
+
+        public int getMinIdle() {
+            return minIdle;
+        }
+
+        public void setMinIdle(int minIdle) {
+            this.minIdle = minIdle;
+        }
+
+        public long getMaxLifetime() {
+            return maxLifetime;
+        }
+
+        public void setMaxLifetime(long maxLifetime) {
+            this.maxLifetime = maxLifetime;
+        }
+
+        public long getIdleTimeout() {
+            return idleTimeout;
+        }
+
+        public void setIdleTimeout(long idleTimeout) {
+            this.idleTimeout = idleTimeout;
+        }
+    }
 
     // Getters and Setters
+
+    public Pool getPool() {
+        return pool;
+    }
 
     public boolean isEnabled() {
         return enabled;

@@ -178,6 +178,11 @@ All properties are prefixed with `r2dbc.jdbc`:
 | `trust-server-certificate` | boolean | `false` | Trust server certificate without validation |
 | `connection-timeout` | int | `30` | Connection timeout in seconds |
 | `login-timeout` | int | `30` | Login timeout in seconds |
+| `pool.enabled` | boolean | `true` | Enable built-in HikariCP pooling |
+| `pool.max-size` | int | `10` | Maximum number of connections in the pool |
+| `pool.min-idle` | int | `2` | Minimum number of idle connections |
+| `pool.max-lifetime` | long | `1800000` | Maximum lifetime of a connection (ms) |
+| `pool.idle-timeout` | long | `600000` | Maximum time a connection can be idle (ms) |
 
 ### Environment-Specific Configuration
 
@@ -718,29 +723,15 @@ public class CustomSchedulerConfig {
 
 ### Connection Pooling
 
-Consider adding HikariCP for connection pooling:
+The library includes built-in support for connection pooling via HikariCP. It is enabled by default with a maximum pool size of 10. You can tune the pool using the `r2dbc.jdbc.pool.*` properties:
 
-```xml
-<dependency>
-    <groupId>com.zaxxer</groupId>
-    <artifactId>HikariCP</artifactId>
-</dependency>
+```properties
+r2dbc.jdbc.pool.enabled=true
+r2dbc.jdbc.pool.max-size=20
+r2dbc.jdbc.pool.min-idle=5
 ```
 
-```java
-@Bean
-public DataSource dataSource(JdbcR2dbcProperties properties) {
-    HikariConfig config = new HikariConfig();
-    config.setJdbcUrl("jdbc:sqlserver://" + properties.getServer() + 
-                      ";databaseName=" + properties.getDatabase());
-    config.setMaximumPoolSize(50);
-    config.setMinimumIdle(10);
-    config.setConnectionTimeout(30000);
-    // ... other settings
-    
-    return new HikariDataSource(config);
-}
-```
+If you prefer to provide your own `DataSource` bean, the library will use it automatically.
 
 ### Monitoring
 
@@ -817,5 +808,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Batch operation optimizations
 
 ---
-
-**Made with ❤️ by the R2DBC JDBC Bridge Team**

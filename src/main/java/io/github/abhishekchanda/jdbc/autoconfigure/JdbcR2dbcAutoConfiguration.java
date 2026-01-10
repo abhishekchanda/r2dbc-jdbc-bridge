@@ -1,6 +1,8 @@
 package io.github.abhishekchanda.jdbc.autoconfigure;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import io.github.abhishekchanda.jdbc.JdbcR2dbcConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -19,7 +21,7 @@ import org.springframework.util.StringUtils;
 import javax.sql.DataSource;
 
 @AutoConfiguration
-@ConditionalOnClass({ConnectionFactory.class, SQLServerDataSource.class})
+@ConditionalOnClass({ConnectionFactory.class, SQLServerDataSource.class, HikariDataSource.class})
 @ConditionalOnProperty(prefix = "r2dbc.jdbc", name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(JdbcR2dbcProperties.class)
 @EnableR2dbcRepositories
@@ -66,6 +68,19 @@ public class JdbcR2dbcAutoConfiguration {
                 ds.setUser(properties.getUsername());
                 ds.setPassword(properties.getPassword());
             }
+        }
+
+        // Apply pooling if enabled
+        if (properties.getPool().isEnabled()) {
+            HikariConfig config = new HikariConfig();
+            config.setDataSource(ds);
+            config.setMaximumPoolSize(properties.getPool().getMaxSize());
+            config.setMinimumIdle(properties.getPool().getMinIdle());
+            config.setMaxLifetime(properties.getPool().getMaxLifetime());
+            config.setIdleTimeout(properties.getPool().getIdleTimeout());
+            config.setPoolName("r2dbc-jdbc-bridge-pool");
+            
+            return new HikariDataSource(config);
         }
 
         return ds;
